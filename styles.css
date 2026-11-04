@@ -1,0 +1,303 @@
+/* ============================================================
+       1. DESIGN TOKENS
+       Change colors and fonts here and the whole site updates.
+       ============================================================ */
+:root {
+  --bg: #191677;
+  --surface: #ffffff;
+  --text: #246d55;
+  --muted: #4f5d57;
+  --accent: #0419d2; /* deep green: links, buttons */
+  --accent-text: #ffffff; /* text on top of the accent */
+  --highlight: #d8ab42; /* used once, on the hero rule */
+  --border: #d5ddd9;
+
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-head: Georgia, "Times New Roman", serif;
+
+  --max: 62rem; /* page content width */
+}
+
+/* Dark mode follows the visitor's system setting */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121816;
+    --surface: #1a2320;
+    --text: #e8eeeb;
+    --muted: #a5b3ad;
+    --accent: #7fd1b0;
+    --accent-text: #0f1a15;
+    --border: #2c3a35;
+  }
+}
+
+/* ============================================================
+       2. BASE STYLES
+       ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--text);
+  background: var(--bg);
+}
+h1,
+h2,
+h3 {
+  font-family: var(--font-head);
+  line-height: 1.2;
+  margin: 0 0 0.5em;
+}
+h1 {
+  font-size: clamp(2.2rem, 6vw, 3.6rem);
+}
+h2 {
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+}
+h3 {
+  font-size: 1.25rem;
+}
+p {
+  margin: 0 0 1em;
+  max-width: 65ch;
+}
+a {
+  color: var(--accent);
+}
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Visible keyboard focus (accessibility) */
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Lets keyboard users jump past the nav */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--accent);
+  color: var(--accent-text);
+  padding: 0.5rem 1rem;
+  z-index: 10;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+/* Shared page container: keeps content centered with side padding */
+.wrap {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+section {
+  padding: 3.5rem 0;
+}
+
+/* ============================================================
+       3. HEADER / NAV
+       ============================================================ */
+header.site {
+  border-bottom: 1px solid var(--border);
+}
+header.site .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.brand {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--text);
+  text-decoration: none;
+}
+nav ul {
+  display: flex;
+  gap: 1.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+nav a {
+  color: var(--muted);
+  text-decoration: none;
+  padding: 0.25rem 0;
+}
+nav a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+/* ============================================================
+       4. HERO
+       ============================================================ */
+.hero {
+  padding: 4.5rem 0 3.5rem;
+}
+.hero h1 {
+  max-width: 16ch;
+}
+.hero h1::after {
+  /* the one bit of color flair on the page */
+  content: "";
+  display: block;
+  width: 4.5rem;
+  height: 6px;
+  background: var(--highlight);
+  margin-top: 0.6rem;
+  border-radius: 3px;
+}
+.hero p.lead {
+  font-size: 1.25rem;
+  color: var(--muted);
+  margin-top: 1.5rem;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+.btn {
+  display: inline-block;
+  padding: 0.7rem 1.3rem;
+  border-radius: 6px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 2px solid var(--accent);
+}
+.btn.primary {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+.btn.secondary {
+  color: var(--accent);
+}
+.btn:hover {
+  filter: brightness(1.1);
+}
+
+/* ============================================================
+       5. PROJECTS GRID
+       Grid auto-fits: 1 column on phones, 2-3 on wider screens.
+       ============================================================ */
+.projects {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.card .thumb {
+  aspect-ratio: 16 / 9;
+  background: var(--border);
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.card .body {
+  padding: 1.1rem 1.25rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.card p {
+  color: var(--muted);
+  font-size: 1rem;
+}
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+}
+.tags li {
+  font-size: 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.1rem 0.65rem;
+}
+.links {
+  margin-top: auto;
+  display: flex;
+  gap: 1rem;
+  font-weight: 600;
+}
+.card.soon {
+  border-style: dashed;
+  background: transparent;
+}
+
+/* ============================================================
+       6. ABOUT + SKILLS
+       ============================================================ */
+.about {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 48rem) {
+  .about {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+.skills {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.skills li {
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ============================================================
+       7. CONTACT + FOOTER
+       ============================================================ */
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  font-weight: 600;
+}
+footer.site {
+  border-top: 1px solid var(--border);
+  padding: 1.5rem 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
